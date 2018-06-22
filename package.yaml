@@ -1,0 +1,23 @@
+name: dlist-implementations
+version: '0.0.0'
+github: "jship/dlist-implementations"
+license: MIT
+author: "Jason Shipman"
+maintainer: "Jason Shipman"
+synopsis: DList implemented in a few different ways.
+description: DList implemented in a few different ways.
+category: Education
+
+extra-source-files:
+- LICENSE.md
+- package.yaml
+- README.md
+- stack.yaml
+
+ghc-options: -Wall -Werror -O2
+
+library:
+  dependencies:
+  - base
+  - transformers
+  source-dirs: library
