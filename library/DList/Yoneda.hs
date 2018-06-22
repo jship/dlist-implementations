@@ -7,9 +7,10 @@ module DList.Yoneda
   ) where
 
 import Control.Applicative (Const(Const, getConst))
+import Data.Monoid (Endo(Endo, appEndo))
 import Data.Semigroup (Semigroup((<>)))
 
-newtype DList a = DList (Yoneda (Const [a]) ())
+newtype DList a = DList (Yoneda (Const (Endo [a])) ())
 
 instance Semigroup (DList a) where
   DList (Yoneda f) <> DList (Yoneda g) = DList (Yoneda $ f <> g)
@@ -19,10 +20,10 @@ instance Monoid (DList a) where
   mappend = (<>)
 
 toDList :: [a] -> DList a
-toDList xs = DList (toYoneda (Const xs))
+toDList xs = DList (toYoneda (Const $ Endo (xs <>)))
 
 fromDList :: DList a -> [a]
-fromDList (DList yo) = getConst . fromYoneda $ yo
+fromDList (DList yo) = (appEndo . getConst . fromYoneda $ yo) []
 
 ------------------------------------------------------------------------------
 
